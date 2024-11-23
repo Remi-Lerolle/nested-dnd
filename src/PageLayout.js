@@ -66,8 +66,6 @@ export function PageLayout() {
 	}
 
 	const handleDrop = (dropped) => {
-		console.log("---- in pageLayout handledrop")
-
 		const newDropped = { ...dropped }
 
 		switch (dropped.type) {
@@ -81,7 +79,6 @@ export function PageLayout() {
 		newDropped.children = []
 		if (newDropped.addOrUpdatePos === "add") {
 			dispatch(addWidget(newDropped));
-			console.log(listOfDropped)
 			setListOfDropped([...listOfDropped, newDropped])
 		} else if (typeof newDropped.addOrUpdatePos === "number") {
 			dispatch(updateWidgetPosition(newDropped))
@@ -123,9 +120,9 @@ export function PageLayout() {
 			>
 				{/* STATE AND REDUX STORE */}
 				{
-					[listOfWidgets, listOfDropped].map(state => {
+					[listOfWidgets, listOfDropped].map((state, stateIndex) => {
 						return state.length
-							? <table >
+							? <table key={`state-${stateIndex}`}>
 								<thead>
 									<tr>
 										<th>#</th>
@@ -138,16 +135,29 @@ export function PageLayout() {
 									</tr>
 								</thead>
 								<tbody>
-									{state.map((dropped, index) => (
-										<tr key={`tr-${index}`}>
-											<td>{index}</td>
+									{state.map((dropped, droppedIndex) => (
+										<tr key={`tr-${droppedIndex}`}>
+											<td>{droppedIndex}</td>
 											{
-												Object.values(dropped).map((v, index) => {
-													if (typeof v === "string") {
-														return <td key={index} >{v}</td>
-													} else {
-														return <td key={index} >
-															{Object.entries(v).map((ok, ov) => <p>{`${ok}: ${ov}`}</p>)}
+												Object.keys(dropped).map((droppedKey, droppedIndex) => {
+													if (droppedKey === "type" || droppedKey === "addOrUpdatePos") {
+														return <td key={droppedIndex} >{dropped[droppedKey]}</td>
+													}
+													else if (droppedKey === "clientOffset") {
+														return <td key={`${droppedIndex}-clientOffset`} >
+															<p>x: {dropped.clientOffset.x}</p>
+															<p>y: {dropped.clientOffset.y}</p>
+														</td>
+													} else if (droppedKey === "children") {
+														return <td key={`${droppedIndex}-children`}  >
+															<ol>
+																{
+																	dropped.children.map(
+																		(_, childIndex) =>
+																			<li key={`${droppedIndex}-children-${childIndex}`}>NESTED WIDGET</li>
+																	)
+																}
+															</ol>
 														</td>
 													}
 												}
