@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { ItemTypes } from "./ItemTypes";
 import { WidgetToDrag } from "./Widget";
 import { addWidget, updateWidgetPosition } from "./widgetSlice"
-
-
+import "./widgets.css"
 
 export function PageLayout() {
 
@@ -95,13 +94,7 @@ export function PageLayout() {
 				id="pageLayoutDiv"
 				ref={combineRef}
 				style={{
-					width: "500px",
-					height: "500px",
-					backgroundColor: collected.isOverCurrent ? "lightgreen" : "lightcyan",
-					marginLeft: "20px",
-					padding: "10px",
-					position: "relative",
-					float: "left"
+					backgroundColor: collected.isOverCurrent ? "lightgreen" : "lightcyan"
 				}}>
 				{listOfWidgets ?
 					listOfWidgets.map((dropped, i) => {
@@ -125,7 +118,7 @@ export function PageLayout() {
 					})
 					: null
 				}
-			</div>
+			</div >
 			<div style={{ "clear": "both" }}
 			>
 				{/* <table style={{ "position": "relative", "float": "left" }}>
@@ -141,24 +134,16 @@ export function PageLayout() {
 				{
 					listOfWidgets.length
 						? <table >
-							<colgroup>
-								<col span="1" style={{ "width": "15 %" }} />
-								<col span="1" style={{ "width": "15 %" }} />
-								<col span="1" style={{ "width": "15 %" }} />
-								<col span="1" style={{ "width": "15 %" }} />
-								<col span="1" style={{ "width": "15 %" }} />
-							</colgroup>
 							<thead>
-								<th>
-									<td style={{ border: "1px solid black" }}>n</td>
+								<tr>
+									<th>#</th>
 									{
 										Object.keys(listOfWidgets[0]).map(key => (
-											<td
-												key={`th-${key}`}
-												style={{ border: "1px solid black" }}>{key}</td>
+											<th
+												key={`th-${key}`}>{key}</th>
 										))
 									}
-								</th>
+								</tr>
 							</thead>
 							<tbody>
 								{listOfWidgets.map((dropped, index) => (
