@@ -121,51 +121,48 @@ export function PageLayout() {
 			</div >
 			<div style={{ "clear": "both" }}
 			>
-				{/* <table style={{ "position": "relative", "float": "left" }}>
-					<tbody>
-						{listOfDropped.map(droppend =>
-							<tr>
-								<td>{droppend.toString()}</td>
-							</tr>)}
-					</tbody>
-				</table> */}
-
-				{/* REDUX STORE */}
+				{/* STATE AND REDUX STORE */}
 				{
-					listOfWidgets.length
-						? <table >
-							<thead>
-								<tr>
-									<th>#</th>
-									{
-										Object.keys(listOfWidgets[0]).map(key => (
-											<th
-												key={`th-${key}`}>{key}</th>
-										))
-									}
-								</tr>
-							</thead>
-							<tbody>
-								{listOfWidgets.map((dropped, index) => (
-									<tr key={`tr-${index}`}>
-										<td>{index}</td>
+					[listOfWidgets, listOfDropped].map(state => {
+						return state.length
+							? <table >
+								<thead>
+									<tr>
+										<th>#</th>
 										{
-											Object.values(dropped).map((v, index) => {
-												return <td key={index} >
-													{typeof v === "string"
-														? v
-														: null}
-												</td>
-											}
-											)
+											Object.keys(state[0]).map(key => (
+												<th
+													key={`th-${key}`}>{key}</th>
+											))
 										}
 									</tr>
-								))}
-							</tbody>
-						</table>
-						: null
+								</thead>
+								<tbody>
+									{state.map((dropped, index) => (
+										<tr key={`tr-${index}`}>
+											<td>{index}</td>
+											{
+												Object.values(dropped).map((v, index) => {
+													if (typeof v === "string") {
+														return <td key={index} >{v}</td>
+													} else {
+														return <td key={index} >
+															{Object.entries(v).map((ok, ov) => <p>{`${ok}: ${ov}`}</p>)}
+														</td>
+													}
+												}
+												)
+											}
+										</tr>
+									))}
+								</tbody>
+							</table>
+							: null
+					})
 				}
+
 			</div >
 		</>
 	)
+
 }
