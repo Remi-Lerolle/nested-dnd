@@ -7,10 +7,7 @@ export const widgetSlice = createSlice({
 	},
 	reducers: {
 		addWidget: (state, action) => {
-			// console.log("-- in addWidget reducer ")
-			// console.log(action.payload)
 			const newState = [...state.value];
-			// console.log(newState)
 			newState.push(action.payload);
 			state.value = newState
 		},

@@ -82,7 +82,8 @@ export function PageLayout() {
 		newDropped.children = []
 		if (newDropped.addOrUpdatePos === "add") {
 			dispatch(addWidget(newDropped));
-			addWidgetToState(newDropped, listOfDropped)
+			console.log(listOfDropped)
+			setListOfDropped([...listOfDropped, newDropped])
 		} else if (typeof newDropped.addOrUpdatePos === "number") {
 			dispatch(updateWidgetPosition(newDropped))
 		}
@@ -125,14 +126,4 @@ export function PageLayout() {
 			}
 		</div>
 	)
-}
-
-const addWidgetToState = (state, widgetToAdd) => {
-	console.log("-- in addWidgetToState")
-	console.log(state)
-	console.log(widgetToAdd)
-	// const newState = [...state.value];
-	// console.log(newState)
-	// newState.push(action.payload);
-	// state.value = newState
 }
