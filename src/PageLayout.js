@@ -90,40 +90,97 @@ export function PageLayout() {
 	}
 
 	return (
-		<div
-			id="pageLayoutDiv"
-			ref={combineRef}
-			style={{
-				width: "500px",
-				height: "500px",
-				backgroundColor: collected.isOverCurrent ? "lightgreen" : "lightcyan",
-				marginLeft: "20px",
-				padding: "10px",
-				position: "relative",
-				float: "left"
-			}}>
-			{listOfWidgets ?
-				listOfWidgets.map((dropped, i) => {
+		<>
+			<div
+				id="pageLayoutDiv"
+				ref={combineRef}
+				style={{
+					width: "500px",
+					height: "500px",
+					backgroundColor: collected.isOverCurrent ? "lightgreen" : "lightcyan",
+					marginLeft: "20px",
+					padding: "10px",
+					position: "relative",
+					float: "left"
+				}}>
+				{listOfWidgets ?
+					listOfWidgets.map((dropped, i) => {
 
-					let newWidgetType;
-					switch (dropped.type) {
-						case 'simpledropped': newWidgetType = "SIMPLEDROPPED"
-							break;
-						case 'griddropped': newWidgetType = "GRIDDROPPED"
-							break;
-					}
+						let newWidgetType;
+						switch (dropped.type) {
+							case 'simpledropped': newWidgetType = "SIMPLEDROPPED"
+								break;
+							case 'griddropped': newWidgetType = "GRIDDROPPED"
+								break;
+						}
 
-					return (
-						<WidgetToDrag
-							widgetKey={newWidgetType}
-							key={`pageLayout-widget-${i}`}
-							index={i}
-							clientOffset={dropped.clientOffset}
-						/>
-					)
-				})
-				: null
-			}
-		</div>
+						return (
+							<WidgetToDrag
+								widgetKey={newWidgetType}
+								key={`pageLayout-widget-${i}`}
+								index={i}
+								clientOffset={dropped.clientOffset}
+							/>
+						)
+					})
+					: null
+				}
+			</div>
+			<div style={{ "clear": "both" }}
+			>
+				{/* <table style={{ "position": "relative", "float": "left" }}>
+					<tbody>
+						{listOfDropped.map(droppend =>
+							<tr>
+								<td>{droppend.toString()}</td>
+							</tr>)}
+					</tbody>
+				</table> */}
+
+				{/* REDUX STORE */}
+				{
+					listOfWidgets.length
+						? <table >
+							<colgroup>
+								<col span="1" style={{ "width": "15 %" }} />
+								<col span="1" style={{ "width": "15 %" }} />
+								<col span="1" style={{ "width": "15 %" }} />
+								<col span="1" style={{ "width": "15 %" }} />
+								<col span="1" style={{ "width": "15 %" }} />
+							</colgroup>
+							<thead>
+								<th>
+									<td style={{ border: "1px solid black" }}>n</td>
+									{
+										Object.keys(listOfWidgets[0]).map(key => (
+											<td
+												key={`th-${key}`}
+												style={{ border: "1px solid black" }}>{key}</td>
+										))
+									}
+								</th>
+							</thead>
+							<tbody>
+								{listOfWidgets.map((dropped, index) => (
+									<tr key={`tr-${index}`}>
+										<td>{index}</td>
+										{
+											Object.values(dropped).map((v, index) => {
+												return <td key={index} >
+													{typeof v === "string"
+														? v
+														: null}
+												</td>
+											}
+											)
+										}
+									</tr>
+								))}
+							</tbody>
+						</table>
+						: null
+				}
+			</div >
+		</>
 	)
 }
