@@ -2,7 +2,7 @@
 // For later migration to typescript
 // Items are the draggable elements
 // They pass information to the drag or drop hook
-const itemDescription = ["#", "type", "clientOffset", "addOrUpdatePos", "children"];
+const itemDescription = ["#", "type", "clientOffset", "last action", "children"];
 
 export function DisplayStateAsTable({ state }) {
 	return <div style={{ "clear": "both" }} >
@@ -25,7 +25,7 @@ export function DisplayStateAsTable({ state }) {
 							<td>{droppedIndex}</td>
 							{
 								Object.keys(dropped).map((droppedKey, droppedIndex) => {
-									if (droppedKey === "type" || droppedKey === "addOrUpdatePos") {
+									if (droppedKey === "type" || droppedKey === "action") {
 										return <td key={droppedIndex} >{dropped[droppedKey]}</td>
 									}
 									else if (droppedKey === "clientOffset") {

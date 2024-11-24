@@ -24,9 +24,9 @@ export const widgetSlice = createSlice({
 		},
 		updateWidgetPosition: (state, action) => {
 			const dropped = action.payload;
-
 			const newState = [...state.value];
-			newState[dropped.addOrUpdatePos].clientOffset = dropped.clientOffset;
+			newState[dropped.index].clientOffset = dropped.clientOffset;
+			newState[dropped.index].action = "move";
 			state.value = newState;
 		},
 		removeWidgetInGrid: (state, action) => {

@@ -25,7 +25,11 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 	const [dragCollected, drag] = useDrag(() => (
 		{
 			type: thisWidgetObj.type,
-			item: { itemType: thisWidgetObj.type, addOrUpdatePos: thisWidgetObj.sideBar ? "add" : index },
+			item: {
+				itemType: thisWidgetObj.type,
+				action: thisWidgetObj.sideBar ? "add" : "move",
+				pos: thisWidgetObj.sideBar ? null : index
+			},
 			collect: (monitor) => ({
 				isDragging: monitor.isDragging()
 			})

@@ -41,7 +41,8 @@ export function PageLayout() {
 				handleDrop({
 					type: monitor.getItem().itemType,
 					clientOffset: { x: deltaX, y: deltaY },
-					addOrUpdatePos: monitor.getItem().addOrUpdatePos
+					action: monitor.getItem().action,
+					index: monitor.getItem().pos
 				})
 			}
 		},
@@ -76,9 +77,9 @@ export function PageLayout() {
 		}
 
 		newDropped.children = []
-		if (newDropped.addOrUpdatePos === "add") {
+		if (newDropped.action === "add") {
 			dispatch(addWidget(newDropped));
-		} else if (typeof newDropped.addOrUpdatePos === "number") {
+		} else if (newDropped.action === "move") {
 			dispatch(updateWidgetPosition(newDropped))
 		}
 	}
@@ -95,13 +96,12 @@ export function PageLayout() {
 					listOfWidgets.map((dropped, i) => {
 
 						let newWidgetType;
-						console.log(dropped.type)
 						switch (dropped.type) {
 							case 'simple widget': newWidgetType = "SIMPLEDROPPED"
 								break;
 							case 'group widget': newWidgetType = "GRIDDROPPED"
 								break;
-							default: break
+							default: break;
 						}
 						return (
 							<WidgetToDrag
