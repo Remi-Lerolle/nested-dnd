@@ -90,11 +90,11 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 				? <button onClick={() => handleRemove(index, indexInGrid)}>x</button>
 				: null}
 			{indexInGrid === null && thisWidgetObj.children
-				? thisWidgetObj.children.map((dropped, iInGrid) => <WidgetToDrag
+				? thisWidgetObj.children.map((_, iInGrid) => <WidgetToDrag
 					key={`grid-${index}-descendant-${iInGrid}`}
 					index={index}
 					indexInGrid={iInGrid}
-					widgetKey="SIMPLEDROPPED"
+					widgetKey="SIMPLENESTED"
 				/>)
 				: null
 			}
