@@ -37,5 +37,35 @@ table p {
 .widgetToDrag {
 	padding: 0.5rem;
 	margin: 0.5rem;
-	width: fit-conten
+	position: absolute;
+}
+
+.simpleWidget {
+	border: none;
+	background-color: lightgrey;
+}
+
+.widgetToDrag:hover {
+	cursor: pointer;
+}
+
+.inGrid {
+	margin: 0.5rem 0;
+	position: relative;
+}
+
+.inSideBar {
+	position: relative;
+}
+
+.isGrid {
+	border: 1px solid lightblue;
+}
+
+.isDragging {
+	opacity: 0.5;
+}
+
+.notDragging {
+	opacity: 1;
 }

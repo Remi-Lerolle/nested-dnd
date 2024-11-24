@@ -45,21 +45,12 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 	}))
 
 	let bgColor;
-	if (thisWidgetObj.type.includes("simple")) {
-		bgColor = "grey"
-	} else if (thisWidgetObj.type === "gridwidget") {
-		bgColor = "lightblue"
-	} else if (dropCollected.isOver) {
-		bgColor = "red"
-	} else {
-		bgColor = "lightblue"
+	if (dropCollected.isOver) {
+		bgColor = "green"
 	}
 
 	const style = {
 		backgroundColor: bgColor,
-		border: dragCollected.isDragging ? "1px solid blue" : "1px solid red",
-		opacity: dragCollected.isDragging ? "0.5" : "1",
-		position: thisWidgetObj.sideBar || indexInGrid !== null ? "relative" : "absolute",
 		top: indexInGrid === null ? thisWidgetObj.clientOffset.y : "0px",
 		left: indexInGrid === null ? thisWidgetObj.clientOffset.x : "0px"
 	}
@@ -84,7 +75,12 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 					? (node) => drag(drop(node))
 					: drag
 			}
-			className="widgetToDrag"
+			className={`widgetToDrag
+				${indexInGrid != null ? " inGrid" : ""}
+				${dragCollected.isDragging ? " isDragging" : " notDragging"}
+				${thisWidgetObj.type.includes("simple") ? " simpleWidget" : " isGrid"}
+				${thisWidgetObj.sideBar ? " inSideBar" : ""}
+				`}
 			style={style}
 		>
 			{ItemTypes[widgetKey]}
