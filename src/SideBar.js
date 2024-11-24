@@ -17,14 +17,13 @@ export function SideBar() {
 			{
 				Object.keys(ItemTypes)
 					.map(itemKey => {
-						if (itemKey !== "GRIDDROPPED"
-							&& itemKey !== "SIMPLEDROPPED"
-							&& itemKey !== "SIMPLENESTED") {
+						if (itemKey == "SIMPLEWIDGET"
+							|| itemKey == "GROUPWIDGET") {
 							return (
 								<WidgetToDrag
 									index={null}
 									key={`drag-${itemKey}`}
-									widgetKey={itemKey}
+									widgeType={itemKey}
 								/>
 							)
 						}

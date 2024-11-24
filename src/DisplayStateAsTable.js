@@ -1,3 +1,5 @@
+import React from "react";
+import { ItemTypes } from "./ItemTypes";
 
 // For later migration to typescript
 // Items are the draggable elements
@@ -38,8 +40,8 @@ export function DisplayStateAsTable({ state }) {
 											<ol>
 												{
 													dropped.children.map(
-														(_, childIndex) =>
-															<li key={`${droppedIndex}-children-${childIndex}`}>NESTED WIDGET</li>
+														(child, childIndex) =>
+															<li key={`${droppedIndex}-children-${childIndex}`}>{ItemTypes[child.type]}</li>
 													)
 												}
 											</ol>

@@ -15,7 +15,7 @@ export function PageLayout() {
 	const dispatch = useDispatch();
 
 	const [collected, dropRef] = useDrop(() => ({
-		accept: Object.keys(ItemTypes).map(key => (ItemTypes[key])),
+		accept: Object.keys(ItemTypes).filter(key => key !== "SIMPLENESTED"),
 		drop(_item, monitor) {
 			if (monitor.isOver({ shallow: true })) {
 
@@ -67,11 +67,11 @@ export function PageLayout() {
 	const handleDrop = (dropped) => {
 		const newDropped = { ...dropped }
 		switch (dropped.type) {
-			case 'simplewidget':
-				newDropped.type = "simpledropped"
+			case 'SIMPLEWIDGET':
+				newDropped.type = "SIMPLEDROPPED"
 				break;
-			case 'gridwidget':
-				newDropped.type = "griddropped"
+			case 'GROUPWIDGET':
+				newDropped.type = "GROUPDROPPED"
 				break;
 			default: break
 		}
@@ -94,18 +94,9 @@ export function PageLayout() {
 				}}>
 				{listOfWidgets ?
 					listOfWidgets.map((dropped, i) => {
-
-						let newWidgetType;
-						switch (dropped.type) {
-							case 'simple widget': newWidgetType = "SIMPLEDROPPED"
-								break;
-							case 'group widget': newWidgetType = "GRIDDROPPED"
-								break;
-							default: break;
-						}
 						return (
 							<WidgetToDrag
-								widgetKey={newWidgetType}
+								widgeType={dropped.type}
 								key={`pageLayout-widget-${i}`}
 								index={i}
 								clientOffset={dropped.clientOffset}

@@ -5,8 +5,7 @@ import { ItemTypes } from "./ItemTypes";
 import { removeWidget, updateWidgetListOfDescendant, removeWidgetInGrid } from "./widgetSlice"
 import { RemoveBt } from "./RemoveBt";
 
-export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
-
+export const WidgetToDrag = ({ widgeType, index, indexInGrid = null }) => {
 	const listOfWidgets = useSelector((state) => state.listOfWidgets.value);
 	const dispatch = useDispatch();
 
@@ -14,7 +13,7 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 
 	if (index === null) {
 		// comes from sidebar read it from props
-		thisWidgetObj = { type: ItemTypes[widgetKey], clientOffset: { x: 0, y: 0 }, sideBar: true }
+		thisWidgetObj = { type: widgeType, clientOffset: { x: 0, y: 0 }, sideBar: true }
 	} else if (indexInGrid !== null) {
 		// comes from pagelayout read it from the state
 		thisWidgetObj = { ...listOfWidgets[index].children[indexInGrid], sideBar: false }
@@ -36,11 +35,13 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 		}))
 
 	const [dropCollected, drop] = useDrop(() => ({
-		accept: [ItemTypes.SIMPLEWIDGET],
+		accept: ["SIMPLEWIDGET"],
 		drop(_item, monitor) {
-			handleDrop({
-				type: monitor.getItem().itemType,
-			})
+			dispatch(updateWidgetListOfDescendant({
+				index,
+				newDescendant: { type: "SIMPLENESTED" }
+			}
+			))
 		},
 		collect: (monitor) => ({
 			isOver: monitor.isOver()
@@ -58,10 +59,6 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 		left: indexInGrid === null ? thisWidgetObj.clientOffset.x : "0px"
 	}
 
-	const handleDrop = (obj) => {
-		dispatch(updateWidgetListOfDescendant({ index, newDescendant: obj }))
-	};
-
 	const handleRemove = (index, indexInGrid) => {
 		if (indexInGrid !== null) {
 			dispatch(removeWidgetInGrid({ index, indexInGrid }))
@@ -74,22 +71,22 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 	return (
 		<div
 			ref={
-				ItemTypes[widgetKey] === "group dropped"
+				widgeType === "GROUPDROPPED"
 					? (node) => drag(drop(node))
 					: drag
 			}
 			className={`widgetToDrag
 				${indexInGrid != null ? " inGrid" : ""}
 				${dragCollected.isDragging ? " isDragging" : " notDragging"}
-				${thisWidgetObj.type.includes("simple") ? " simpleWidget" : " isGrid"}
+				${thisWidgetObj.type.includes("SIMPLE") ? " simpleWidget" : " isGrid"}
 				${thisWidgetObj.sideBar ? " inSideBar" : ""}
 				`}
 			style={style}
 		>
-			<span className="widgetType">{ItemTypes[widgetKey]}</span>
+			<span className="widgetType">{ItemTypes[widgeType]}</span>
 			{index !== null ? ` ${index}` : null}
 			{indexInGrid !== null ? ` - ${indexInGrid}` : null}
-			{widgetKey === 'SIMPLEDROPPED' || widgetKey === "GRIDDROPPED"
+			{widgeType === 'SIMPLEDROPPED' || widgeType === "GROUPDROPPED" || widgeType === "SIMPLENESTED"
 				? <RemoveBt
 					stateHandler={handleRemove}
 					index={index} indexInGrid={indexInGrid} />
@@ -99,7 +96,7 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 					key={`grid-${index}-descendant-${iInGrid}`}
 					index={index}
 					indexInGrid={iInGrid}
-					widgetKey="SIMPLENESTED"
+					widgeType="SIMPLENESTED"
 				/>)
 				: null
 			}
