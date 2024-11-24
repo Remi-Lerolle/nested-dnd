@@ -55,8 +55,7 @@ export function PageLayout() {
 			dropped: monitor.didDrop(),
 			dropResult: monitor.getDropResult(),
 		})
-	}),
-		[listOfDropped]
+	})
 	)
 
 	function combineRef(el) {
@@ -80,7 +79,6 @@ export function PageLayout() {
 		newDropped.children = []
 		if (newDropped.addOrUpdatePos === "add") {
 			dispatch(addWidget(newDropped));
-			setListOfDropped([...listOfDropped, newDropped])
 		} else if (typeof newDropped.addOrUpdatePos === "number") {
 			dispatch(updateWidgetPosition(newDropped))
 		}
@@ -117,9 +115,7 @@ export function PageLayout() {
 				}
 			</div >
 			<DisplayStateAsTable
-				listOfWidgets={listOfWidgets}
-				listOfDropped={listOfDropped} />
+				state={listOfWidgets} />
 		</>
 	)
-
 }
