@@ -27,14 +27,12 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 			item: { itemType: thisWidgetObj.type, addOrUpdatePos: thisWidgetObj.sideBar ? "add" : index },
 			collect: (monitor) => ({
 				isDragging: monitor.isDragging()
-			}),
-			previewOptions: { backgroundColor: "red" }
+			})
 		}))
 
 	const [dropCollected, drop] = useDrop(() => ({
 		accept: [ItemTypes.SIMPLEWIDGET],
 		drop(_item, monitor) {
-			console.log("drop")
 			handleDrop({
 				type: monitor.getItem().itemType,
 			})
@@ -71,7 +69,7 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 	return (
 		<div
 			ref={
-				ItemTypes[widgetKey] === "griddropped"
+				ItemTypes[widgetKey] === "group dropped"
 					? (node) => drag(drop(node))
 					: drag
 			}

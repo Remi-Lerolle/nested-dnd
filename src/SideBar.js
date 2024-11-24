@@ -2,8 +2,8 @@ import React from "react";
 import { ItemTypes } from "./ItemTypes";
 import { WidgetToDrag } from "./Widget";
 
-export function SideBar(){
-	return(
+export function SideBar() {
+	return (
 		<div
 			style={{
 				backgroundColor: "yellow",
@@ -11,20 +11,24 @@ export function SideBar(){
 				width: "fit-content",
 				position: "relative",
 				float: "left"
-				}}>
+			}}>
 			<div
-				style={{marginBottom: "5px"}} >Side Bar</div>
+				style={{ marginBottom: "5px" }} >Side Bar</div>
 			{
 				Object.keys(ItemTypes)
-					.map( itemKey => {
-						if (itemKey !== "GRIDDROPPED" && itemKey !== "SIMPLEDROPPED" ) {
-							return(
+					.map(itemKey => {
+						if (itemKey !== "GRIDDROPPED"
+							&& itemKey !== "SIMPLEDROPPED"
+							&& itemKey !== "SIMPLENESTED") {
+							return (
 								<WidgetToDrag
 									index={null}
 									key={`drag-${itemKey}`}
-									widgetKey={ itemKey }
+									widgetKey={itemKey}
 								/>
-					)}})
+							)
+						}
+					})
 			}
 		</div>
 	)

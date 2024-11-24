@@ -95,10 +95,11 @@ export function PageLayout() {
 					listOfWidgets.map((dropped, i) => {
 
 						let newWidgetType;
+						console.log(dropped.type)
 						switch (dropped.type) {
-							case 'simpledropped': newWidgetType = "SIMPLEDROPPED"
+							case 'simple widget': newWidgetType = "SIMPLEDROPPED"
 								break;
-							case 'griddropped': newWidgetType = "GRIDDROPPED"
+							case 'group widget': newWidgetType = "GRIDDROPPED"
 								break;
 							default: break
 						}
