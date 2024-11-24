@@ -3,6 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import { ItemTypes } from "./ItemTypes";
 import { removeWidget, updateWidgetListOfDescendant, removeWidgetInGrid } from "./widgetSlice"
+import { RemoveBt } from "./RemoveBt";
 
 export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 
@@ -81,11 +82,13 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 				`}
 			style={style}
 		>
-			{ItemTypes[widgetKey]}
-			{index ? ` - ${index}` : null}
+			<span className="widgetType">{ItemTypes[widgetKey]}</span>
+			{index !== null ? ` ${index}` : null}
 			{indexInGrid !== null ? ` - ${indexInGrid}` : null}
 			{widgetKey === 'SIMPLEDROPPED' || widgetKey === "GRIDDROPPED"
-				? <button onClick={() => handleRemove(index, indexInGrid)}>x</button>
+				? <RemoveBt
+					stateHandler={handleRemove}
+					index={index} indexInGrid={indexInGrid} />
 				: null}
 			{indexInGrid === null && thisWidgetObj.children
 				? thisWidgetObj.children.map((_, iInGrid) => <WidgetToDrag

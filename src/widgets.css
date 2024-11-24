@@ -69,3 +69,23 @@ table p {
 .notDragging {
 	opacity: 1;
 }
+
+.removeWidgetButton {
+	border: none;
+	position: absolute;
+	top: 0;
+	background-color: lightsteelblue;
+	color: white;
+	right: 0px;
+	padding: 0.5rem;
+	height: 2.25rem;
+	cursor: pointer;
+}
+
+.removeWidgetButton:hover {
+	background-color: red;
+}
+
+.spacer {
+	margin-right: 2rem;
+}
