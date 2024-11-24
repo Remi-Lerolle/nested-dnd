@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { ItemTypes } from "./ItemTypes";
 import { WidgetToDrag } from "./Widget";
 import { addWidget, updateWidgetPosition } from "./widgetSlice"
-import { DisplayStateAsTable } from "./DisplayStateAsTable";
 import "./widgets.css"
 
 export function PageLayout() {
@@ -95,29 +94,25 @@ export function PageLayout() {
 	}
 
 	return (
-		<>
-			<div
-				id="pageLayoutDiv"
-				ref={combineRef}
-				style={{
-					backgroundColor: backgroundColor
-				}}>
-				{listOfWidgets ?
-					listOfWidgets.map((dropped, i) => {
-						return (
-							<WidgetToDrag
-								widgeType={dropped.type}
-								key={`pageLayout-widget-${i}`}
-								index={i}
-								clientOffset={dropped.clientOffset}
-							/>
-						)
-					})
-					: null
-				}
-			</div >
-			<DisplayStateAsTable
-				state={listOfWidgets} />
-		</>
+		<div
+			id="pageLayoutDiv"
+			ref={combineRef}
+			style={{
+				backgroundColor: backgroundColor
+			}}>
+			{listOfWidgets ?
+				listOfWidgets.map((dropped, i) => {
+					return (
+						<WidgetToDrag
+							widgeType={dropped.type}
+							key={`pageLayout-widget-${i}`}
+							index={i}
+							clientOffset={dropped.clientOffset}
+						/>
+					)
+				})
+				: null
+			}
+		</div >
 	)
 }

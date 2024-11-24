@@ -7,6 +7,7 @@ import { SideBar } from './SideBar';
 import { PageLayout } from './PageLayout';
 import store from "./store"
 import { Provider } from "react-redux"
+import { DisplayStateAsTable } from "./DisplayStateAsTable"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
 			<DndProvider backend={HTML5Backend}>
 				<SideBar />
 				<PageLayout />
+				<DisplayStateAsTable />
 			</DndProvider>
 		</Provider>
 	</React.StrictMode>
