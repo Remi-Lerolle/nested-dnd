@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import { ItemTypes } from "./ItemTypes";
@@ -65,7 +65,6 @@ export function PageLayout() {
 
 	const handleDrop = (dropped) => {
 		const newDropped = { ...dropped }
-
 		switch (dropped.type) {
 			case 'simplewidget':
 				newDropped.type = "simpledropped"
@@ -73,7 +72,9 @@ export function PageLayout() {
 			case 'gridwidget':
 				newDropped.type = "griddropped"
 				break;
+			default: break
 		}
+
 		newDropped.children = []
 		if (newDropped.addOrUpdatePos === "add") {
 			dispatch(addWidget(newDropped));
@@ -99,6 +100,7 @@ export function PageLayout() {
 								break;
 							case 'griddropped': newWidgetType = "GRIDDROPPED"
 								break;
+							default: break
 						}
 						return (
 							<WidgetToDrag
