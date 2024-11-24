@@ -47,6 +47,7 @@ export function PageLayout() {
 			}
 		},
 		collect: (monitor) => ({
+			highlighted: monitor.canDrop(),
 			isOver: monitor.isOver(),
 			isOverCurrent: monitor.isOver({ shallow: true }),
 			itemType: monitor.getItemType(),
@@ -84,13 +85,22 @@ export function PageLayout() {
 		}
 	}
 
+	let backgroundColor = "";
+	if (collected.isOverCurrent) {
+		backgroundColor = "green"
+	} else if (collected.highlighted) {
+		backgroundColor = "lightgreen"
+	} else {
+		backgroundColor = "lightcyan"
+	}
+
 	return (
 		<>
 			<div
 				id="pageLayoutDiv"
 				ref={combineRef}
 				style={{
-					backgroundColor: collected.isOverCurrent ? "lightgreen" : "lightcyan"
+					backgroundColor: backgroundColor
 				}}>
 				{listOfWidgets ?
 					listOfWidgets.map((dropped, i) => {
