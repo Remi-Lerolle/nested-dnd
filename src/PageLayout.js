@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { ItemTypes } from "./ItemTypes";
 import { WidgetToDrag } from "./Widget";
 import { addWidget, updateWidgetPosition } from "./widgetSlice"
+import { DisplayStateAsTable } from "./DisplayStateAsTable";
 import "./widgets.css"
 
 export function PageLayout() {
@@ -103,7 +104,6 @@ export function PageLayout() {
 							case 'griddropped': newWidgetType = "GRIDDROPPED"
 								break;
 						}
-
 						return (
 							<WidgetToDrag
 								widgetKey={newWidgetType}
@@ -116,62 +116,9 @@ export function PageLayout() {
 					: null
 				}
 			</div >
-			<div style={{ "clear": "both" }}
-			>
-				{/* STATE AND REDUX STORE */}
-				{
-					[listOfWidgets, listOfDropped].map((state, stateIndex) => {
-						return state.length
-							? <table key={`state-${stateIndex}`}>
-								<thead>
-									<tr>
-										<th>#</th>
-										{
-											Object.keys(state[0]).map(key => (
-												<th
-													key={`th-${key}`}>{key}</th>
-											))
-										}
-									</tr>
-								</thead>
-								<tbody>
-									{state.map((dropped, droppedIndex) => (
-										<tr key={`tr-${droppedIndex}`}>
-											<td>{droppedIndex}</td>
-											{
-												Object.keys(dropped).map((droppedKey, droppedIndex) => {
-													if (droppedKey === "type" || droppedKey === "addOrUpdatePos") {
-														return <td key={droppedIndex} >{dropped[droppedKey]}</td>
-													}
-													else if (droppedKey === "clientOffset") {
-														return <td key={`${droppedIndex}-clientOffset`} >
-															<p>x: {dropped.clientOffset.x}</p>
-															<p>y: {dropped.clientOffset.y}</p>
-														</td>
-													} else if (droppedKey === "children") {
-														return <td key={`${droppedIndex}-children`}  >
-															<ol>
-																{
-																	dropped.children.map(
-																		(_, childIndex) =>
-																			<li key={`${droppedIndex}-children-${childIndex}`}>NESTED WIDGET</li>
-																	)
-																}
-															</ol>
-														</td>
-													}
-												}
-												)
-											}
-										</tr>
-									))}
-								</tbody>
-							</table>
-							: null
-					})
-				}
-
-			</div >
+			<DisplayStateAsTable
+				listOfWidgets={listOfWidgets}
+				listOfDropped={listOfDropped} />
 		</>
 	)
 
