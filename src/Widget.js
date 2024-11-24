@@ -2,7 +2,7 @@ import React from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import { ItemTypes } from "./ItemTypes";
-import { removeWidget, updateWidgetListOfDescendant, removeWidgetInGrid } from "./widgetSlice"
+import { removeWidget, addWidgetToListOfDescendant, removeWidgetFromGroup } from "./widgetSlice"
 import { RemoveBt } from "./RemoveBt";
 
 export const WidgetToDrag = ({ widgeType, index, indexInGrid = null }) => {
@@ -37,7 +37,7 @@ export const WidgetToDrag = ({ widgeType, index, indexInGrid = null }) => {
 	const [dropCollected, drop] = useDrop(() => ({
 		accept: ["SIMPLEWIDGET"],
 		drop(_item, monitor) {
-			dispatch(updateWidgetListOfDescendant({
+			dispatch(addWidgetToListOfDescendant({
 				index,
 				newDescendant: { type: "SIMPLENESTED" }
 			}
@@ -61,7 +61,7 @@ export const WidgetToDrag = ({ widgeType, index, indexInGrid = null }) => {
 
 	const handleRemove = (index, indexInGrid) => {
 		if (indexInGrid !== null) {
-			dispatch(removeWidgetInGrid({ index, indexInGrid }))
+			dispatch(removeWidgetFromGroup({ index, indexInGrid }))
 		}
 		else {
 			dispatch(removeWidget(index));

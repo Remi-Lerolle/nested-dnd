@@ -20,20 +20,14 @@ export function PageLayout() {
 
 				const initialClientOffset = monitor.getInitialClientOffset();
 				const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
-				/*
-						InitialOffset is the position of the click relative to the source widget
-				*/
+				// InitialOffset is the position of the click relative to the source widget
 				const initialOffsetX = initialClientOffset.x - initialSourceClientOffset.x
 				const initialOffsetY = initialClientOffset.y - initialSourceClientOffset.y
 
-				/*
-						Offset is the position where the widget has been dropped inside the web page (client)
-				*/
+				//Offset is the position where the widget has been dropped inside the web page (client)
 				const offset = monitor.getClientOffset();
 
-				/*
-						Calculates where the widget has been droped inside the pageLayout( boundingBox )
-				*/
+				//Calculates where the widget has been droped inside the pageLayout( boundingBox )
 				const deltaX = offset.x - boundingBox.current.x - initialOffsetX;
 				const deltaY = offset.y - boundingBox.current.y - initialOffsetY;
 

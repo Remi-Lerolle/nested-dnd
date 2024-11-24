@@ -6,42 +6,45 @@ export const widgetSlice = createSlice({
 		value: []
 	},
 	reducers: {
+		// Adds a widget to the layout
 		addWidget: (state, action) => {
-			const newState = [...state.value];
-			newState.push(action.payload);
-			state.value = newState
+			const newListOfWidget = [...state.value];
+			newListOfWidget.push(action.payload);
+			state.value = newListOfWidget;
 		},
+		// Remove a widget from the layout
 		removeWidget: (state, action) => {
-			const index = action.payload;
-			const newState = [...state.value];
-			newState.splice(index, 1);
-			state.value = newState;
+			//action.payload is the index of the widget to remove
+			const newListOfWidget = [...state.value];
+			newListOfWidget.splice(action.payload, 1);
+			state.value = newListOfWidget;
 		},
-		updateWidgetListOfDescendant: (state, action) => {
-			const newState = [...state.value];
-			newState[action.payload.index].children.push(action.payload.newDescendant)
-			state.value = newState
+		// Adds a widget to a group
+		addWidgetToListOfDescendant: (state, action) => {
+			// action.payload contains the index of the group in the layout
+			// and the widget item to add to this group 
+			const newListOfWidget = [...state.value];
+			newListOfWidget[action.payload.index].children.push(action.payload.newDescendant)
+			state.value = newListOfWidget
 		},
+		// Update widget position
 		updateWidgetPosition: (state, action) => {
-			const dropped = action.payload;
-			const newState = [...state.value];
-			newState[dropped.index].clientOffset = dropped.clientOffset;
-			newState[dropped.index].action = "move";
-			state.value = newState;
+			// action.payload contains a dropped widget item with index and new position 
+			const newListOfWidget = [...state.value];
+			newListOfWidget[action.payload.index].clientOffset = action.payload.clientOffset;
+			state.value = newListOfWidget;
 		},
-		removeWidgetInGrid: (state, action) => {
-			const gridIndex = action.payload.index;
-			const indexInGrid = action.payload.indexInGrid;
-
-			const newChildren = [...state.value[gridIndex].children];
-			newChildren.splice(indexInGrid, 1)
-
-			const newState = [...state.value];
-			newState[gridIndex].children = newChildren;
+		// Remove a widget from a group
+		removeWidgetFromGroup: (state, action) => {
+			// action.payload contains the index of the group 
+			// and the index in the grid of the widget to remove
+			const newListOfWidget = [...state.value];
+			newListOfWidget[action.payload.index].children.splice(action.payload.indexInGrid, 1);
+			state.value = newListOfWidget;
 		}
 	}
 })
 
-export const { addWidget, removeWidget, removeWidgetInGrid, updateWidgetPosition, updateWidgetListOfDescendant } = widgetSlice.actions
+export const { addWidget, removeWidget, removeWidgetFromGroup, updateWidgetPosition, addWidgetToListOfDescendant } = widgetSlice.actions
 
 export default widgetSlice.reducer
