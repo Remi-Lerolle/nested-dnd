@@ -5,13 +5,7 @@ import { WidgetToDrag } from "./Widget";
 export function SideBar() {
 	return (
 		<div
-			style={{
-				backgroundColor: "yellow",
-				padding: "5px",
-				width: "fit-content",
-				position: "relative",
-				float: "left"
-			}}>
+			className="sideBar">
 			<div
 				style={{ marginBottom: "5px" }} >Side Bar</div>
 			{

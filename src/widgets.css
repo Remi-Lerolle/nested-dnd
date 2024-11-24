@@ -89,3 +89,23 @@ table p {
 .spacer {
 	margin-right: 2rem;
 }
+
+.sideBar {
+	background-color: lightyellow;
+	padding: 5px;
+	width: fit-content;
+	position: relative;
+	float: left
+}
+
+.isGrid p {
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+.inGrid p,
+.simpleWidget p,
+.inSideBar p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
