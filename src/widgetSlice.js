@@ -12,33 +12,21 @@ export const widgetSlice = createSlice({
 			state.value = newState
 		},
 		removeWidget: (state, action) => {
-			console.log("-- in removeWidget reducer ")
-			console.log(action.payload)
-
 			const index = action.payload;
-
 			const newState = [...state.value];
 			newState.splice(index, 1);
 			state.value = newState;
-
 		},
 		updateWidgetListOfDescendant: (state, action) => {
-			console.log("-- in updateWidgetListOfDescendant reducer ")
-			console.log(action)
-
 			const newState = [...state.value];
-			console.log(newState)
 			newState[action.payload.index].children.push(action.payload.newDescendant)
-			console.log(newState)
 			state.value = newState
 		},
 		updateWidgetPosition: (state, action) => {
 			const dropped = action.payload;
-			console.log(dropped)
 
 			const newState = [...state.value];
 			newState[dropped.addOrUpdatePos].clientOffset = dropped.clientOffset;
-			console.log(newState[dropped.addOrUpdatePos])
 			state.value = newState;
 		},
 		removeWidgetInGrid: (state, action) => {
@@ -50,7 +38,6 @@ export const widgetSlice = createSlice({
 
 			const newState = [...state.value];
 			newState[gridIndex].children = newChildren;
-			console.log(newState)
 		}
 	}
 })
