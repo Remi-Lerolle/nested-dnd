@@ -56,12 +56,9 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 	}
 
 	const style = {
-		padding: "15px",
 		backgroundColor: bgColor,
 		border: dragCollected.isDragging ? "1px solid blue" : "1px solid red",
 		opacity: dragCollected.isDragging ? "0.5" : "1",
-		margin: "5px",
-		width: "fit-content",
 		position: thisWidgetObj.sideBar || indexInGrid !== null ? "relative" : "absolute",
 		top: indexInGrid === null ? thisWidgetObj.clientOffset.y : "0px",
 		left: indexInGrid === null ? thisWidgetObj.clientOffset.x : "0px"
@@ -87,6 +84,7 @@ export const WidgetToDrag = ({ widgetKey, index, indexInGrid = null }) => {
 					? (node) => drag(drop(node))
 					: drag
 			}
+			className="widgetToDrag"
 			style={style}
 		>
 			{ItemTypes[widgetKey]}

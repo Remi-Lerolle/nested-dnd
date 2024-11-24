@@ -14,8 +14,6 @@ export function PageLayout() {
 	const listOfWidgets = useSelector((state) => state.listOfWidgets.value)
 	const dispatch = useDispatch();
 
-	const [listOfDropped, setListOfDropped] = useState([]);
-
 	const [collected, dropRef] = useDrop(() => ({
 		accept: Object.keys(ItemTypes).map(key => (ItemTypes[key])),
 		drop(_item, monitor) {
